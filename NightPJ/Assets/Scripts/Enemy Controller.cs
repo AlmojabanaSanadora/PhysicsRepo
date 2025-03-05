@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using Unity.Burst.Intrinsics;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering.Universal;
@@ -10,6 +11,8 @@ public class EnemyController : MonoBehaviour
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask WhatIsGround, WhatIsPlayer;
+    public GameObject bullet;
+    public float health;
 
     // Guard State
 
@@ -55,8 +58,8 @@ public class EnemyController : MonoBehaviour
     }
     private void SearchGuardArea()
     {
-        float randomZ = Random.Range(-WalkPointRadius, WalkPointRadius);
-        float randomX = Random.Range(-WalkPointRadius, WalkPointRadius);
+        float randomZ = UnityEngine.Random.Range(-WalkPointRadius, WalkPointRadius);
+        float randomX = UnityEngine.Random.Range(-WalkPointRadius, WalkPointRadius);
 
         walkArea = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
         
@@ -75,12 +78,43 @@ public class EnemyController : MonoBehaviour
 
         transform.LookAt(player);
 
-        // if (!cooldownOn)
-        // {
-        //     cooldownOn = true;
-        //     Invoke(nameof(ResetAttack), attackCooldown);
-        // }
+        if (!cooldownOn)
+        {
+            Rigidbody rb = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            Destroy(rb.gameObject, 2f);
+
+
+            cooldownOn = true;
+            Invoke(nameof(ResetAttack), attackCooldown);
+        }
     }
 
+    private void ResetAttack()
+    {
+        cooldownOn = false;
+
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0) Invoke(nameof(ThanosEnemy), 0.5f);
+
+    }
+
+    private void ThanosEnemy()
+    {
+        Destroy(gameObject);
+    }
+
+    private void Esthethics()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, attackRadius);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position, sightRadius);
+    }
     
 }
