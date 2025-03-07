@@ -24,11 +24,11 @@ public class PlayerObject : MonoBehaviour
         {
             Vector3 direction = (transform.forward * ver + transform.right * hor).normalized;
 
-            rigidbody.velocity = direction * movementSpeed;
+            rigidbody.linearVelocity = direction * movementSpeed;
         }
         else
         {
-            rigidbody.velocity = Vector3.zero;
+            rigidbody.linearVelocity = Vector3.zero;
         }
     }
 }

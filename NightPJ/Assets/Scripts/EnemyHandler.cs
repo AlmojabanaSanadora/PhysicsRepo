@@ -37,13 +37,27 @@ public class EnemyController : MonoBehaviour
     }
 
 
-    private void Update() {
+    private void Update() 
+    {
         playerInSightRadius = Physics.CheckSphere(transform.position, sightRadius, WhatIsPlayer);
-        playerInAttackRad = Physics.CheckSphere(transform.position, attackRadius, WhatIsPlayer);
-        
-        if (!playerInSightRadius && !playerInAttackRad) Guarding();
-        if (playerInSightRadius && !playerInAttackRad) HuntingPlayer();
-        if (playerInSightRadius && playerInAttackRad) AttackingPlayer();
+
+        if(playerInSightRadius)
+        {
+            playerInAttackRad = Physics.CheckSphere(transform.position, attackRadius, WhatIsPlayer);
+
+            if(playerInAttackRad)
+            {
+                AttackingPlayer();
+            }
+            else
+            {
+                HuntingPlayer();
+            }
+        }
+        else
+        {
+            Guarding();
+        }
     }
     
         private void Guarding()
@@ -109,12 +123,12 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void Esthethics()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, attackRadius);
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, sightRadius);
+        Gizmos.DrawWireSphere(transform.position, sightRadius);
     }
     
 }
