@@ -4,31 +4,53 @@ using UnityEngine;
 
 public class PlayerObject : MonoBehaviour
 {
-    private new Rigidbody rigidbody;
+    public CharacterController Controlador;
 
-    public float movementSpeed;
-    // Start is called before the first frame update
+    public float Velocidad = 15f;
+    public float Gravedad = -10f;
+    public float Saltar = 4f;
+
+
+    public Transform EnElPiso;
+    public float DistaciaDelPiso;
+    public LayerMask MascaraDelPiso;
+
+
+
+    Vector3 VelocidadAbajo;
+    bool EstaEnElPiso;
+
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        float hor = Input.GetAxisRaw("Horizontal");
-        float ver = Input.GetAxisRaw("Vertical");
+        EstaEnElPiso = Physics.CheckSphere(EnElPiso.position, DistaciaDelPiso, MascaraDelPiso);
 
-
-        if (hor != 0 || ver != 0)
+        if (EstaEnElPiso && VelocidadAbajo.y < 0)
         {
-            Vector3 direction = (transform.forward * ver + transform.right * hor).normalized;
+            VelocidadAbajo.y = -2;
+        }
 
-            rigidbody.linearVelocity = direction * movementSpeed;
-        }
-        else
+
+
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        Vector3 mover = transform.right * x + transform.forward * z;
+        Controlador.Move(mover * Velocidad * Time.deltaTime);
+
+        if (Input.GetButtonDown("Jump") && EstaEnElPiso)
         {
-            rigidbody.linearVelocity = Vector3.zero;
+            VelocidadAbajo.y = Mathf.Sqrt(Saltar * -2f * Gravedad);
         }
+
+        VelocidadAbajo.y += Gravedad * Time.deltaTime;
+
+        Controlador.Move(VelocidadAbajo * Time.deltaTime);
+
     }
 }

@@ -1053,7 +1053,7 @@ Transform:
   m_GameObject: {fileID: 79494748}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.043}
+  m_LocalPosition: {x: 0.002, y: 0, z: -0.075}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2942,6 +2942,7 @@ GameObject:
   - component: {fileID: 263825408}
   - component: {fileID: 263825409}
   - component: {fileID: 263825410}
+  - component: {fileID: 263825411}
   m_Layer: 7
   m_Name: PlayerObject
   m_TagString: Untagged
@@ -3041,6 +3042,7 @@ Transform:
   - {fileID: 79494749}
   - {fileID: 2124769722}
   - {fileID: 351322917}
+  - {fileID: 1632489447}
   m_Father: {fileID: 881888410}
   m_LocalEulerAnglesHint: {x: 0, y: 180.971, z: 0}
 --- !u!114 &263825406
@@ -3068,7 +3070,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5c4b813d69d44740a6b10a84c1765da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 3
+  Controlador: {fileID: 263825411}
+  Velocidad: 2
+  Gravedad: -2
+  Saltar: 3
+  EnElPiso: {fileID: 1632489447}
+  DistaciaDelPiso: 0.1
+  MascaraDelPiso:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!54 &263825408
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3125,6 +3135,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vidaPlayer: 200
+--- !u!143 &263825411
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263825401}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &267930510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14076,6 +14111,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 991420789}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1632489446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1632489447}
+  m_Layer: 7
+  m_Name: EnElPiso
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1632489447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632489446}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 263825405}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1640490913
 PrefabInstance:
