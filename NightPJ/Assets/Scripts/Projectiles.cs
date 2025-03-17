@@ -5,9 +5,7 @@ public class Projectile : MonoBehaviour
     public float damage;
 
     private void OnTriggerEnter(Collider other)
-    {
-        print($"Projectile hit: {other.name}");  
-
+    { 
         if (gameObject.CompareTag("PlayerProjectile"))
         {
             if (other.CompareTag("Enemy"))
@@ -23,10 +21,10 @@ public class Projectile : MonoBehaviour
         {
             if (other.CompareTag("Player"))
             {
-                print("Hit the Player! Attempting to deal damage...");
+                // print("Hit the Player! Attempting to deal damage...");
                 other.GetComponent<PlayerHealth>()?.TakeDamage(damage);
 
-                print("Damage function called!");
+                // print("Damage function called!");
                 Destroy(gameObject);
             }
         }
