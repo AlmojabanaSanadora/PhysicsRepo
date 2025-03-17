@@ -45,6 +45,7 @@ public class PlayerObject : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && EstaEnElPiso)
         {
+            print("Saltar");
             VelocidadAbajo.y = Mathf.Sqrt(Saltar * -2f * Gravedad);
         }
 
@@ -53,4 +54,14 @@ public class PlayerObject : MonoBehaviour
         Controlador.Move(VelocidadAbajo * Time.deltaTime);
 
     }
+
+    #if UNITY_EDITOR
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(EnElPiso.position, DistaciaDelPiso);
+    }
+
+    #endif
 }
