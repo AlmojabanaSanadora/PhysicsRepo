@@ -12,7 +12,6 @@ public class EnemyController : MonoBehaviour
     public Transform player;
     public LayerMask WhatIsGround, WhatIsPlayer;
     public GameObject bullet;
-    public float health;
 
     // Guard State
 
@@ -94,11 +93,10 @@ public class EnemyController : MonoBehaviour
 
         if (!cooldownOn)
         {
-            Rigidbody rb = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            Rigidbody rb = Instantiate(bullet, transform.position + transform.forward, transform.rotation).GetComponent<Rigidbody>();
+            rb.linearVelocity = transform.forward * 32f;
+            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
             Destroy(rb.gameObject, 2f);
-
 
             cooldownOn = true;
             Invoke(nameof(ResetAttack), attackCooldown);
@@ -109,18 +107,6 @@ public class EnemyController : MonoBehaviour
     {
         cooldownOn = false;
 
-    }
-
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-        if (health <= 0) Invoke(nameof(ThanosEnemy), 0.5f);
-
-    }
-
-    private void ThanosEnemy()
-    {
-        Destroy(gameObject);
     }
 
     private void OnDrawGizmos()

@@ -22,15 +22,12 @@ public class Shot : MonoBehaviour
 
             if (Time.time > shotRateTime)
             {
-
-                GameObject newBullet;
-
-                newBullet = Instantiate(bullet, spawnPoint.position, spawnPoint.rotation);
-
-                newBullet.GetComponent<Rigidbody>().AddForce(spawnPoint.forward * shotForce);
+                Rigidbody rb = Instantiate(bullet, spawnPoint.position, spawnPoint.rotation).GetComponent<Rigidbody>();
+                rb.linearVelocity = spawnPoint.forward * 32f;
+                rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
                 shotRateTime = Time.time + shotRate;
-                Destroy(newBullet, 2);
+                Destroy(rb.gameObject, 2f);
 
             }
         }
