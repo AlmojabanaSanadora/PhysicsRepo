@@ -936,9 +936,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4163734113647084}
   - component: {fileID: 95642434784350160}
-  - component: {fileID: 114495054144503478}
+  - component: {fileID: 5383451502175927806}
+  - component: {fileID: -5319305336936406178}
+  - component: {fileID: 4573156629699495860}
+  - component: {fileID: -7453664981691917665}
   m_Layer: 0
-  m_Name: Badger
+  m_Name: Enemy1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -983,7 +986,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &114495054144503478
+--- !u!195 &5383451502175927806
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424105536132696}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &-5319305336936406178
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -992,9 +1017,57 @@ MonoBehaviour:
   m_GameObject: {fileID: 1424105536132696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50c5533b43a36734c89acb4229df2b2e, type: 3}
+  m_Script: {fileID: 11500000, guid: 337d7a1581b255b44a9a77fe7f3f3f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WhatIsGround:
+    serializedVersion: 2
+    m_Bits: 64
+  WhatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  bullet: {fileID: 7787304347581843137, guid: 046f3ff6da61afe469ce6f0fd8f8569c, type: 3}
+  walkArea: {x: 0, y: 0, z: 0}
+  WalkPointRadius: 15
+  attackCooldown: 1.5
+  sightRadius: 5
+  attackRadius: 2
+--- !u!114 &4573156629699495860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424105536132696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97fdd3a1aa3a9394e9228649279c84d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+--- !u!136 &-7453664981691917665
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424105536132696}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.0087852
+  m_Height: 3.8279757
+  m_Direction: 1
+  m_Center: {x: 0.004348755, y: 1.7357838, z: 0.026091456}
 --- !u!1 &1426274548557074
 GameObject:
   m_ObjectHideFlags: 0

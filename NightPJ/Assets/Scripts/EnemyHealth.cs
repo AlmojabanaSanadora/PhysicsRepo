@@ -1,8 +1,16 @@
 using UnityEngine;
+using UnityEngine.AI;
+
 
 public class EnemyHealth : MonoBehaviour
 {
     public float health = 100f;
+    private Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
     public void TakeDamage(float damage)
     {
         health -= damage;
@@ -12,6 +20,11 @@ public class EnemyHealth : MonoBehaviour
 
     private void ThanosEnemy()
     {
-        Destroy(gameObject);
+        animator.SetTrigger("isDead");
+
+        GetComponent<NavMeshAgent>().enabled = false;
+        GetComponent<EnemyController>().enabled = false;
+
+        Destroy(gameObject, 3f);
     }
 }

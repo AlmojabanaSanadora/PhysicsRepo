@@ -1,50 +1,47 @@
-using System.Runtime.CompilerServices;
-using Unity.Burst.Intrinsics;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering.Universal;
-
 
 public class EnemyController : MonoBehaviour
 {
-    public NavMeshAgent agent;
-    public Transform player;
+    private NavMeshAgent agent;
+    private Transform player;
+    private Animator animator;
     public LayerMask WhatIsGround, WhatIsPlayer;
     public GameObject bullet;
 
     // Guard State
-
     public Vector3 walkArea;
     bool walkPointState;
     public float WalkPointRadius;
 
     // Attack State
-
     public float attackCooldown;
     bool cooldownOn;
 
     // States
-
     public float sightRadius, attackRadius;
     bool playerInSightRadius, playerInAttackRad;
 
-    private void Awake ()
+    private void Awake()
     {
-        player = GameObject.Find("PlayerObject").transform;
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (player == null)
+        {
+            Debug.LogError("Player not found! Make sure your player GameObject is active and has the 'Player' tag.");
+        }
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>(); 
     }
 
-
-    private void Update() 
+    private void Update()
     {
         playerInSightRadius = Physics.CheckSphere(transform.position, sightRadius, WhatIsPlayer);
 
-        if(playerInSightRadius)
+        if (playerInSightRadius)
         {
             playerInAttackRad = Physics.CheckSphere(transform.position, attackRadius, WhatIsPlayer);
 
-            if(playerInAttackRad)
+            if (playerInAttackRad)
             {
                 AttackingPlayer();
             }
@@ -58,24 +55,33 @@ public class EnemyController : MonoBehaviour
             Guarding();
         }
     }
-    
-        private void Guarding()
+
+    private void Guarding()
     {
         if (!walkPointState) SearchGuardArea();
         if (walkPointState)
-        agent.SetDestination(walkArea);
+        {
+            agent.SetDestination(walkArea);
+            animator.SetBool("isWalking", true);
+            animator.SetBool("isRunning", false);
+            animator.SetBool("isAttacking", false);
+        }
 
         Vector3 rangeToWalk = transform.position - walkArea;
         if (rangeToWalk.magnitude < 1f)
-        walkPointState = false;
+        {
+            walkPointState = false;
+            animator.SetBool("isWalking", false);
+        }
     }
+
     private void SearchGuardArea()
     {
         float randomZ = UnityEngine.Random.Range(-WalkPointRadius, WalkPointRadius);
         float randomX = UnityEngine.Random.Range(-WalkPointRadius, WalkPointRadius);
 
         walkArea = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-        
+
         if (Physics.Raycast(walkArea, -transform.up, 2f, WhatIsGround))
             walkPointState = true;
     }
@@ -83,13 +89,20 @@ public class EnemyController : MonoBehaviour
     private void HuntingPlayer()
     {
         agent.SetDestination(player.position);
+
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isRunning", true);
+        animator.SetBool("isAttacking", false);
     }
 
     private void AttackingPlayer()
     {
         agent.SetDestination(transform.position);
-
         transform.LookAt(player);
+
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isRunning", false);
+        animator.SetBool("isAttacking", true);
 
         if (!cooldownOn)
         {
@@ -106,7 +119,6 @@ public class EnemyController : MonoBehaviour
     private void ResetAttack()
     {
         cooldownOn = false;
-
     }
 
     private void OnDrawGizmos()
@@ -116,5 +128,4 @@ public class EnemyController : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRadius);
     }
-    
 }
