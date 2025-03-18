@@ -3958,7 +3958,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 475, y: 526}
+  m_AnchoredPosition: {x: 475, y: 621}
   m_SizeDelta: {x: 300, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &385976292
@@ -6866,7 +6866,7 @@ GameObject:
   - component: {fileID: 719808927}
   - component: {fileID: 719808926}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: EnemyCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6886,10 +6886,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1892370970}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 192, y: 0}
-  m_SizeDelta: {x: 100, y: 25}
+  m_SizeDelta: {x: 0, y: -75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &719808926
 MonoBehaviour:
@@ -7077,7 +7077,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -17, y: 25}
+  m_AnchoredPosition: {x: 1, y: 77}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &730937824
@@ -8488,7 +8488,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1424105536132696, guid: 2ec61b6551995414e864c9bebb4cb0be, type: 3}
       propertyPath: m_Name
-      value: Badger
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 1424105536132696, guid: 2ec61b6551995414e864c9bebb4cb0be, type: 3}
       propertyPath: m_Layer
@@ -8500,15 +8500,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4163734113647084, guid: 2ec61b6551995414e864c9bebb4cb0be, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2488567
+      value: 0.08122073
       objectReference: {fileID: 0}
     - target: {fileID: 4163734113647084, guid: 2ec61b6551995414e864c9bebb4cb0be, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2488567
+      value: 0.08122073
       objectReference: {fileID: 0}
     - target: {fileID: 4163734113647084, guid: 2ec61b6551995414e864c9bebb4cb0be, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2488567
+      value: 0.08122073
       objectReference: {fileID: 0}
     - target: {fileID: 4163734113647084, guid: 2ec61b6551995414e864c9bebb4cb0be, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8516,7 +8516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4163734113647084, guid: 2ec61b6551995414e864c9bebb4cb0be, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.802
+      value: 2.832
       objectReference: {fileID: 0}
     - target: {fileID: 4163734113647084, guid: 2ec61b6551995414e864c9bebb4cb0be, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16944,11 +16944,11 @@ RectTransform:
   - {fileID: 719808925}
   m_Father: {fileID: 723914049}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 469, y: 176}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!1 &1893848884 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4647283406098476851, guid: 00e7c20b7ef3bcb49a714b8924a5524b, type: 3}
@@ -19035,6 +19035,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2115613347}
   - component: {fileID: 2115613346}
+  - component: {fileID: 2115613348}
   m_Layer: 0
   m_Name: ==GAME MANAGER==
   m_TagString: Untagged
@@ -19069,6 +19070,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2115613348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115613345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3622affd38d8ddb44b9082b2c54d9bae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyCountText: {fileID: 719808926}
+  calcEnemyCount: 5
 --- !u!1 &2122239030
 GameObject:
   m_ObjectHideFlags: 0
@@ -19100,11 +19115,11 @@ RectTransform:
   - {fileID: 1353715842}
   m_Father: {fileID: 723914049}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 445, y: 176}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!1 &2124769721
 GameObject:
   m_ObjectHideFlags: 0
@@ -19604,6 +19619,7 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 348172746}
   - {fileID: 881888410}
+  - {fileID: 881341691}
   - {fileID: 263825405}
   - {fileID: 1540394933}
   - {fileID: 1607450656}
@@ -19615,4 +19631,3 @@ SceneRoots:
   - {fileID: 1628734376}
   - {fileID: 2111277075}
   - {fileID: 1817344779}
-  - {fileID: 881341691}
