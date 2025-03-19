@@ -9,16 +9,13 @@ public class EnemyController : MonoBehaviour
     public LayerMask WhatIsGround, WhatIsPlayer;
     public GameObject bullet;
 
-    // Guard State
     public Vector3 walkArea;
     bool walkPointState;
     public float WalkPointRadius;
 
-    // Attack State
     public float attackCooldown;
     bool cooldownOn;
 
-    // States
     public float sightRadius, attackRadius;
     bool playerInSightRadius, playerInAttackRad;
 
@@ -30,7 +27,7 @@ public class EnemyController : MonoBehaviour
             Debug.LogError("Player not found! Make sure your player GameObject is active and has the 'Player' tag.");
         }
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>(); 
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -88,7 +85,11 @@ public class EnemyController : MonoBehaviour
 
     private void HuntingPlayer()
     {
-        agent.SetDestination(player.position);
+        Vector3 targetPosition = player.position;
+
+        targetPosition = AdjustForNearbyEnemies(targetPosition, 15f); 
+
+        agent.SetDestination(targetPosition);
 
         animator.SetBool("isWalking", false);
         animator.SetBool("isRunning", true);
@@ -121,11 +122,28 @@ public class EnemyController : MonoBehaviour
         cooldownOn = false;
     }
 
+    private Vector3 AdjustForNearbyEnemies(Vector3 targetPosition, float minDistance)
+    {
+        Collider[] nearbyColliders = Physics.OverlapSphere(transform.position, minDistance, WhatIsPlayer);
+        foreach (Collider collider in nearbyColliders)
+        {
+            if (collider.gameObject != gameObject && collider.CompareTag("Enemy"))
+            {
+                Vector3 directionAway = (targetPosition - collider.transform.position).normalized;
+                targetPosition += directionAway * minDistance;
+            }
+        }
+        return targetPosition;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRadius);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, 2f); 
     }
 }
