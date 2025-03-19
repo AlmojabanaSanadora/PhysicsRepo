@@ -33,7 +33,7 @@ private void HandleDeath()
     GetComponent<NavMeshAgent>().enabled = false;
     GetComponent<EnemyController>().enabled = false;
 
-    if (UIHandler.instance != null)
+    if (GameHandler.instance != null)
     {
         Invoke(nameof(UpdateUIBeforeDestroy), 2.99f); 
     }
@@ -42,9 +42,9 @@ private void HandleDeath()
 
 private void UpdateUIBeforeDestroy()
 {
-    if (UIHandler.instance != null)
+    if (GameHandler.instance != null)
     {
-        UIHandler.instance.DecrementEnemyCount();
+        GameHandler.instance.DecrementEnemyCount();
     }
 }
 }
