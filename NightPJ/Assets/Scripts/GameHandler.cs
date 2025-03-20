@@ -52,7 +52,7 @@ public class GameHandler : MonoBehaviour
         foreach (GameObject door in doors1)
         {
         Vector3 targetPosition = new Vector3(door.transform.position.x - 1.1f, door.transform.position.y, door.transform.position.z);
-        StartCoroutine(SlideDoor(door, targetPosition, 2f)); // Slide over 2 seconds
+        StartCoroutine(SlideDoor(door, targetPosition, 2f)); 
         }
     }
 
@@ -73,10 +73,10 @@ public class GameHandler : MonoBehaviour
     while (elapsedTime < duration)
     {
         elapsedTime += Time.deltaTime;
-        door.transform.position = Vector3.Lerp(initialPosition, targetPosition, elapsedTime / duration); // Smoothly interpolate position
+        door.transform.position = Vector3.Lerp(initialPosition, targetPosition, elapsedTime / duration);
         yield return null;
     }
 
-    door.transform.position = targetPosition; // Ensure the final position is set
+    door.transform.position = targetPosition; 
 }
 }
