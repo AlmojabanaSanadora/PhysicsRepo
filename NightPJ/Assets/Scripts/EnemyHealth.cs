@@ -33,18 +33,20 @@ private void HandleDeath()
     GetComponent<NavMeshAgent>().enabled = false;
     GetComponent<EnemyController>().enabled = false;
 
-    if (GameHandler.instance != null)
-    {
-        Invoke(nameof(UpdateUIBeforeDestroy), 2.99f); 
-    }
     Destroy(gameObject, 3f);
 }
 
-private void UpdateUIBeforeDestroy()
+    private void OnDestroy()
 {
+
     if (GameHandler.instance != null)
     {
         GameHandler.instance.DecrementEnemyCount();
+    }
+
+    if (EnemySpawner.instance != null)
+    {
+        EnemySpawner.instance.DecrementTotalEnemies();
     }
 }
 }

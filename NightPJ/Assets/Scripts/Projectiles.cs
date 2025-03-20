@@ -10,10 +10,10 @@ public class Projectile : MonoBehaviour
         {
             if (other.CompareTag("Enemy"))
             {
-                print("Hit an Enemy! Attempting to deal damage...");  
+                // print("Hit an Enemy! Attempting to deal damage...");  
                 other.GetComponent<EnemyHealth>()?.TakeDamage(damage);
 
-                print("Damage function called!");  
+                // print("Damage function called!");  
                 Destroy(gameObject);  
             }
         }
