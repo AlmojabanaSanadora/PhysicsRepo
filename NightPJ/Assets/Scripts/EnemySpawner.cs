@@ -73,28 +73,30 @@ public class EnemySpawner : MonoBehaviour
     {
         case 1:
             currentSpawnPoints = GetChildTransforms(room1Parent);
-            totalEnemiesToSpawn = 15;
+            totalEnemiesToSpawn = 15; 
             break;
         case 2:
             currentSpawnPoints = GetChildTransforms(room2Parent);
-            totalEnemiesToSpawn = 20;
+            totalEnemiesToSpawn = 20; 
             break;
         case 3:
             currentSpawnPoints = GetChildTransforms(room3Parent);
-            totalEnemiesToSpawn = 25;
+            totalEnemiesToSpawn = 25; 
             break;
         case 4:
             currentSpawnPoints = GetChildTransforms(room4Parent);
             totalEnemiesToSpawn = 30;
             break;
         default:
+            Debug.LogError("Invalid room number!");
             currentSpawnPoints = null;
             totalEnemiesToSpawn = 0;
             break;
     }
 
     enemiesSpawned = 0;
-    activeEnemies.Clear();
+    activeEnemies.Clear(); 
+
 }
 
     public void SpawnEnemies(int enemyCount)
