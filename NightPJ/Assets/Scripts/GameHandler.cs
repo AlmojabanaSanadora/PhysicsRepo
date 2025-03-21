@@ -30,19 +30,20 @@ public class GameHandler : MonoBehaviour
         }
     }
     private void Start()
+{
+    if (EnemySpawner.instance == null)
     {
-        if (EnemySpawner.instance == null)
-        {
-            return;
-        }
-
-        calcEnemyCount = EnemySpawner.instance.totalEnemiesToSpawn;
-        enemyCountText.text = calcEnemyCount.ToString();
+        return;
     }
+
+    calcEnemyCount = EnemySpawner.instance.totalEnemiesToSpawn;
+    enemyCountText.text = calcEnemyCount.ToString();
+}
 
     public void SetActiveRoom(int roomNumber)
     {
         if (roomNumber == currentRoom) return;
+
 
         CloseDoorsForRoom(currentRoom);
 
@@ -61,7 +62,13 @@ public void DecrementEnemyCount()
         {
             calcEnemyCount--;
             UpdateEnemyCount();
+
+            if (calcEnemyCount == 0)
+            {
+                OpenDoorsForRoom(currentRoom);
+            }
         }
+            
     }
 
     public void UpdateEnemyCount()
@@ -70,36 +77,50 @@ public void DecrementEnemyCount()
     }
 
     private void OpenDoorsForRoom(int roomNumber)
+{
+    GameObject[] doorsToOpen = GetDoorsForRoom(roomNumber);
+
+    if (doorsToOpen == null || doorsToOpen.Length == 0)
     {
-        GameObject[] doorsToOpen = GetDoorsForRoom(roomNumber);
+        return;
+    }
 
-        if (doorsToOpen == null || doorsToOpen.Length == 0)
+    foreach (GameObject door in doorsToOpen)
+    {
+        DoorController doorController = door.GetComponent<DoorController>();
+        if (doorController != null)
         {
-            return;
+            StartCoroutine(SlideDoor(door, doorController.openDirection, doorController.openDistance, 2f));
         }
-
-        foreach (GameObject door in doorsToOpen)
+        else
         {
-            Vector3 targetPosition = new Vector3(door.transform.position.x - 1.1f, door.transform.position.y, door.transform.position.z);
-            StartCoroutine(SlideDoor(door, targetPosition, 2f));
+            Debug.LogWarning($"Door {door.name} does not have a DoorController component!");
         }
     }
+}
 
     private void CloseDoorsForRoom(int roomNumber)
+{
+    GameObject[] doorsToClose = GetDoorsForRoom(roomNumber);
+
+    if (doorsToClose == null || doorsToClose.Length == 0)
     {
-        GameObject[] doorsToClose = GetDoorsForRoom(roomNumber);
+        return;
+    }
 
-        if (doorsToClose == null || doorsToClose.Length == 0)
+    foreach (GameObject door in doorsToClose)
+    {
+        DoorController doorController = door.GetComponent<DoorController>();
+        if (doorController != null)
         {
-            return;
+            StartCoroutine(SlideDoor(door, -doorController.openDirection, doorController.openDistance, 0.1f));
         }
-
-        foreach (GameObject door in doorsToClose)
+        else
         {
-            Vector3 targetPosition = new Vector3(door.transform.position.x + 1.1f, door.transform.position.y, door.transform.position.z);
-            StartCoroutine(SlideDoor(door, targetPosition, 2f));
+            Debug.LogWarning($"Door {door.name} does not have a DoorController component!");
         }
     }
+}
 
     private GameObject[] GetDoorsForRoom(int roomNumber)
     {
@@ -113,18 +134,18 @@ public void DecrementEnemyCount()
         }
     }
 
-    private IEnumerator SlideDoor(GameObject door, Vector3 targetPosition, float duration)
+    private IEnumerator SlideDoor(GameObject door, Vector3 direction, float distance, float duration)
+{
+    Vector3 initialPosition = door.transform.position;
+    Vector3 targetPosition = initialPosition + door.transform.TransformDirection(direction.normalized) * distance;
+    float elapsedTime = 0f;
+
+    while (elapsedTime < duration)
     {
-        Vector3 initialPosition = door.transform.position;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            door.transform.position = Vector3.Lerp(initialPosition, targetPosition, elapsedTime / duration);
-            yield return null;
-        }
-
-        door.transform.position = targetPosition;
+        elapsedTime += Time.deltaTime;
+        door.transform.position = Vector3.Lerp(initialPosition, targetPosition, elapsedTime / duration);
+        yield return null;
     }
+
+    door.transform.position = targetPosition;}
 }
