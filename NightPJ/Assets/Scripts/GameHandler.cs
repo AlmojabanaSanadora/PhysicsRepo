@@ -6,11 +6,16 @@ using System.Collections;
 public class GameHandler : MonoBehaviour
 {
     public GameObject[] doors1;
+    public GameObject[] doors2;
+    public GameObject[] doors3;
+    public GameObject[] doors4;
+
     public TextMeshProUGUI enemyCountText;
     private int calcEnemyCount;
     public static GameHandler instance;
 
-    private bool doorsOpen = false;
+    private bool[] doorsOpen = new bool[4];
+    private int currentRoom = 1;
 
 
     private void Awake()
@@ -35,41 +40,76 @@ public class GameHandler : MonoBehaviour
         enemyCountText.text = calcEnemyCount.ToString();
     }
 
-public void DecrementEnemyCount()
-{
-    if (calcEnemyCount > 0)
+    public void SetActiveRoom(int roomNumber)
     {
-        calcEnemyCount--;
+        if (roomNumber == currentRoom) return;
+
+        CloseDoorsForRoom(currentRoom);
+
+        currentRoom = roomNumber;
+
+        OpenDoorsForRoom(currentRoom);
+
+        EnemySpawner.instance.SetActiveRoom(currentRoom);
+        calcEnemyCount = EnemySpawner.instance.totalEnemiesToSpawn;
         UpdateEnemyCount();
-        RunDoors();
     }
-}
+
+public void DecrementEnemyCount()
+    {
+        if (calcEnemyCount > 0)
+        {
+            calcEnemyCount--;
+            UpdateEnemyCount();
+        }
+    }
 
     public void UpdateEnemyCount()
     {
         enemyCountText.text = calcEnemyCount.ToString();
     }
 
-    public void OpenFirstDoors()
+    private void OpenDoorsForRoom(int roomNumber)
     {
-        if (doors1 == null || doors1.Length == 0)
+        GameObject[] doorsToOpen = GetDoorsForRoom(roomNumber);
+
+        if (doorsToOpen == null || doorsToOpen.Length == 0)
         {
             return;
         }
 
-        foreach (GameObject door in doors1)
+        foreach (GameObject door in doorsToOpen)
         {
             Vector3 targetPosition = new Vector3(door.transform.position.x - 1.1f, door.transform.position.y, door.transform.position.z);
             StartCoroutine(SlideDoor(door, targetPosition, 2f));
         }
     }
 
-    private void RunDoors()
+    private void CloseDoorsForRoom(int roomNumber)
     {
-        if (calcEnemyCount == 0 && !doorsOpen)
+        GameObject[] doorsToClose = GetDoorsForRoom(roomNumber);
+
+        if (doorsToClose == null || doorsToClose.Length == 0)
         {
-            OpenFirstDoors();
-            doorsOpen = true;
+            return;
+        }
+
+        foreach (GameObject door in doorsToClose)
+        {
+            Vector3 targetPosition = new Vector3(door.transform.position.x + 1.1f, door.transform.position.y, door.transform.position.z);
+            StartCoroutine(SlideDoor(door, targetPosition, 2f));
+        }
+    }
+
+    private GameObject[] GetDoorsForRoom(int roomNumber)
+    {
+        switch (roomNumber)
+        {
+            case 1: return doors1;
+            case 2: return doors2;
+            case 3: return doors3;
+            case 4: return doors4;
+            default: return null;
         }
     }
 
