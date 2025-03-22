@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Shot : MonoBehaviour
 {
-    public LayerMask hitLayers;
-    public AudioSource gunAudio;
-    public Transform spawnPoint; 
+    public GameObject bullet; 
+    public Transform spawnPoint;
+    public float projectileSpeed = 25f; 
+    public float projectileLifeTime = 2f; 
     public float shotRate = 0.5f; 
     public float rayRange = 100f; 
+    public LayerMask hitLayers;
     public float damage = 101f;
 
     private float shotRateTime = 0;
@@ -19,50 +21,61 @@ public class Shot : MonoBehaviour
         {
             if (Time.time > shotRateTime)
             {
-                ShootRay(); 
+                Shoot();
                 shotRateTime = Time.time + shotRate;
             }
         }
     }
 
-    private void ShootRay()
+    private void Shoot()
     {
-        Ray ray = new Ray(spawnPoint.position, spawnPoint.forward); 
+        Ray ray = new Ray(spawnPoint.position, spawnPoint.forward);
         RaycastHit hit;
-
-        Debug.DrawRay(spawnPoint.position, spawnPoint.forward * rayRange, Color.red, 1f); 
+        Vector3 targetPoint = spawnPoint.position + spawnPoint.forward * rayRange; 
 
         if (Physics.Raycast(ray, out hit, rayRange, hitLayers))
-{
-    Debug.Log($"Ray hit: {hit.collider.name}");
-
-    if (gunAudio != null)
         {
-            gunAudio.pitch = Random.Range(0.95f, 1.05f);
-            gunAudio.Play();
-        }
+            targetPoint = hit.point; 
 
-    if (hit.collider.CompareTag("Enemy"))
+            if (hit.collider.CompareTag("Enemy"))
+            {
+                EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
+                if (enemyHealth != null)
+                {
+                    enemyHealth.TakeDamage(damage);
+                }
+            }
+        }
+        SpawnBullet(targetPoint);
+    }
+
+    private void SpawnBullet(Vector3 targetPoint)
     {
-        EnemyHealth enemyHealth = hit.collider.GetComponent<EnemyHealth>();
-        if (enemyHealth != null)
+        GameObject bulletInstance = Instantiate(bullet, spawnPoint.position, Quaternion.identity);
+
+        Vector3 direction = (targetPoint - spawnPoint.position).normalized;
+
+        Rigidbody rb = bulletInstance.GetComponent<Rigidbody>();
+        if (rb != null)
         {
-            enemyHealth.TakeDamage(damage);
+            rb.linearVelocity = direction * projectileSpeed;
         }
+        else
+        {
+            StartCoroutine(MoveBullet(bulletInstance, targetPoint));
+        }
+
+        Destroy(bulletInstance, projectileLifeTime);
     }
 
-    StartCoroutine(ShowRayEffect(hit.point));
-}
+    private IEnumerator MoveBullet(GameObject bulletInstance, Vector3 targetPoint)
+    {
+        while (bulletInstance != null && Vector3.Distance(bulletInstance.transform.position, targetPoint) > 0.1f)
+        {
+            bulletInstance.transform.position = Vector3.MoveTowards(bulletInstance.transform.position, targetPoint, projectileSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        Destroy(bulletInstance);
     }
-
-    private IEnumerator ShowRayEffect(Vector3 hitPoint)
-{
-    LineRenderer line = GetComponent<LineRenderer>();
-    line.SetPosition(0, spawnPoint.position); 
-    line.SetPosition(1, hitPoint); 
-
-    line.enabled = true;
-    yield return new WaitForSeconds(0.1f); 
-    line.enabled = false;
-}
 }

@@ -657,6 +657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 0}
+  gameOverCanvas: {fileID: 0}
   maxHealth: 100
   currentHealth: 0
 --- !u!120 &2460547312710993601

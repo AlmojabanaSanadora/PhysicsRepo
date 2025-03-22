@@ -23,7 +23,7 @@ public class PausaMenu : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
 
                 AudioSource[] sonidos = FindObjectsOfType<AudioSource>();
-
+        
                 for (int i = 9; i < sonidos.Length; i++)
                 {
                     sonidos[i].Pause();
