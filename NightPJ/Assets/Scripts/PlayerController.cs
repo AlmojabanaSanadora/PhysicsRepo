@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerObject : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public CharacterController Controlador;
 
-    public float Velocidad = 15f;
+    public float Velocidad = 1f;
     public float Gravedad = -10f;
     public float Saltar = 4f;
 
