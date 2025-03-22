@@ -19625,6 +19625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjetoMenuPausa: {fileID: 2103065493}
   Pausa: 0
+  MenuSalir: {fileID: 2035249671}
 --- !u!1 &1860688114
 GameObject:
   m_ObjectHideFlags: 0
@@ -20752,7 +20753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1509434, g: 0.020647923, b: 0.020647923, a: 0.8509804}
+  m_Color: {r: 0.1509434, g: 0.020647923, b: 0.020647923, a: 0.89411765}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -22319,7 +22320,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2103065494
 RectTransform:
   m_ObjectHideFlags: 0
