@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
     private void Awake()
     {
         SetActiveRoom(1); 
-        totalEnemiesToSpawn = 15;
+        totalEnemiesToSpawn = 7;
 
         if (instance == null)
         {
@@ -73,19 +73,19 @@ public class EnemySpawner : MonoBehaviour
     {
         case 1:
             currentSpawnPoints = GetChildTransforms(room1Parent);
-            totalEnemiesToSpawn = 15;
+            totalEnemiesToSpawn = 7;
             break;
         case 2:
             currentSpawnPoints = GetChildTransforms(room2Parent);
-            totalEnemiesToSpawn = 20;
+            totalEnemiesToSpawn = 10;
             break;
         case 3:
             currentSpawnPoints = GetChildTransforms(room3Parent);
-            totalEnemiesToSpawn = 25;
+            totalEnemiesToSpawn = 15;
             break;
         case 4:
             currentSpawnPoints = GetChildTransforms(room4Parent);
-            totalEnemiesToSpawn = 30;
+            totalEnemiesToSpawn = 20;
             break;
         default:
             currentSpawnPoints = null;

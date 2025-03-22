@@ -13,10 +13,12 @@ public class GameHandler : MonoBehaviour
     public TextMeshProUGUI enemyCountText;
     private int calcEnemyCount;
     public static GameHandler instance;
+    public GameObject gameOverUI;
     public AudioSource doorSound;
 
     private bool[] doorsOpen = new bool[4];
     private int currentRoom = 1;
+    private int lastRoom = 4;
 
 
     private void Awake()
@@ -63,8 +65,16 @@ public void DecrementEnemyCount()
 
             if (calcEnemyCount == 0)
             {
+                if (currentRoom == lastRoom)
+                {
+                    ShowGameOver();
+                }
+                else            
+                {
                 OpenDoorsForRoom(currentRoom);
+                }
             }
+
         }
             
     }
@@ -138,6 +148,16 @@ public void DecrementEnemyCount()
             // case 4: return doors4;
             default: return null;
         }
+    }
+
+        private void ShowGameOver()
+    {
+        if (gameOverUI != null)
+        {
+            gameOverUI.SetActive(true);
+        }
+
+        gameObject.SetActive(false);
     }
 
     private IEnumerator SlideDoor(GameObject door, Vector3 direction, float distance, float duration)

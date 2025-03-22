@@ -7,6 +7,7 @@ public class PlayerHealth : MonoBehaviour
     public Slider healthBar;
     public GameObject gameOverCanvas; // 🔴 Referencia al Canvas de Game Over
     public float maxHealth = 100f;
+    public float minHealth = 0f;
     public float currentHealth;
 
     private void Start()
@@ -24,10 +25,10 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth, minHealth, maxHealth);
         UpdateHealthBar();
 
-        if (currentHealth <= 0)
+        if (currentHealth <= minHealth)
         {
             ShowGameOver(); // 🔴 Muestra el Canvas en vez de destruir al jugador
         }

@@ -23608,6 +23608,7 @@ MonoBehaviour:
   - {fileID: 1597122553}
   - {fileID: 1157776983}
   enemyCountText: {fileID: 719808926}
+  gameOverUI: {fileID: 684059429}
   doorSound: {fileID: 2115613350}
 --- !u!114 &2115613349
 MonoBehaviour:
@@ -24249,6 +24250,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 1.062
       objectReference: {fileID: 0}
+    - target: {fileID: 3562990022577703245, guid: cbcb527821632db4286c2b5c39e8b749, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.008
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562990022577703245, guid: cbcb527821632db4286c2b5c39e8b749, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.501
+      objectReference: {fileID: 0}
     - target: {fileID: 3764824812008552703, guid: cbcb527821632db4286c2b5c39e8b749, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.002
@@ -24349,6 +24358,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerObject
       objectReference: {fileID: 0}
+    - target: {fileID: 6283282465229433837, guid: cbcb527821632db4286c2b5c39e8b749, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6339675463385709767, guid: cbcb527821632db4286c2b5c39e8b749, type: 3}
       propertyPath: field of view
       value: 60
@@ -24397,8 +24410,7 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2460547312710993601, guid: cbcb527821632db4286c2b5c39e8b749, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
