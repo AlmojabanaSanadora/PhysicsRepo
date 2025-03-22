@@ -6,6 +6,7 @@ public class EnemyHealth : MonoBehaviour
     public float health = 100f;
     private Animator animator;
     private bool isDead = false; 
+    private float healing = 10f;
 
     private void Awake()
     {
@@ -23,6 +24,16 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    public void Heal()
+    {
+    PlayerHealth playerHealth = FindFirstObjectByType<PlayerHealth>();
+    if (playerHealth != null)
+    {
+        playerHealth.Heal(healing); 
+        Debug.Log($"Player healed by {healing} points from enemy death.");
+    }
+    }
+
 private void HandleDeath()
 {
     if (isDead) return; 
@@ -31,7 +42,9 @@ private void HandleDeath()
     animator.SetTrigger("isDead");
 
     GetComponent<NavMeshAgent>().enabled = false;
-    GetComponent<EnemyController>().enabled = false;
+    GetComponent<EnemyHandler>().enabled = false;
+
+    Heal();
 
     Destroy(gameObject, 3f);
 }

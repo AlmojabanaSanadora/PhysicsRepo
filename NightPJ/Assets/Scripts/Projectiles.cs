@@ -5,28 +5,32 @@ public class Projectile : MonoBehaviour
     public float damage;
 
     private void OnTriggerEnter(Collider other)
-    { 
-        if (gameObject.CompareTag("PlayerProjectile"))
+    {
+        if (other.CompareTag("Enemy")) 
         {
-            if (other.CompareTag("Enemy"))
+            Debug.Log($"Hit enemy: {other.name}");
+            EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+            if (enemyHealth != null)
             {
-                // print("Hit an Enemy! Attempting to deal damage...");  
-                other.GetComponent<EnemyHealth>()?.TakeDamage(damage);
-
-                // print("Damage function called!");  
-                Destroy(gameObject);  
+                enemyHealth.TakeDamage(damage);
             }
+
+            Destroy(gameObject); 
         }
-        else if (gameObject.CompareTag("EnemyProjectile"))
+        else if (other.CompareTag("Player")) 
         {
-            if (other.CompareTag("Player"))
+            Debug.Log($"Hit player: {other.name}");
+            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
             {
-                // print("Hit the Player! Attempting to deal damage...");
-                other.GetComponent<PlayerHealth>()?.TakeDamage(damage);
-
-                // print("Damage function called!");
-                Destroy(gameObject);
+                playerHealth.TakeDamage(damage); 
             }
+
+            Destroy(gameObject);
+        }
+        else if (!other.CompareTag("Player")) 
+        {
+            Destroy(gameObject); 
         }
     }
 }

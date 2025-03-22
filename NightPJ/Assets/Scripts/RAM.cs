@@ -1,9 +1,27 @@
 using UnityEngine;
 
-public class InvisibleObject : MonoBehaviour
+public class RAM : MonoBehaviour
 {
-    void Start()
+    private static RAM instance;
+    private AudioSource audioSource;
+
+    private void Awake()
     {
-        GetComponent<Renderer>().enabled = false; // Hides the object
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject); 
+
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource != null && !audioSource.isPlaying)
+        {
+            audioSource.loop = true; 
+            audioSource.Play(); 
+        }
     }
 }

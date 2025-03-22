@@ -8,11 +8,12 @@ public class GameHandler : MonoBehaviour
     public GameObject[] doors1;
     public GameObject[] doors2;
     public GameObject[] doors3;
-    public GameObject[] doors4;
+    // public GameObject[] doors4;
 
     public TextMeshProUGUI enemyCountText;
     private int calcEnemyCount;
     public static GameHandler instance;
+    public AudioSource doorSound;
 
     private bool[] doorsOpen = new bool[4];
     private int currentRoom = 1;
@@ -88,6 +89,10 @@ public void DecrementEnemyCount()
         if (doorController != null)
         {
             StartCoroutine(SlideDoor(door, doorController.openDirection, doorController.openDistance, 2f));
+            if (doorSound != null)
+            {
+                doorSound.Play();
+            }
         }
         else
         {
@@ -110,7 +115,11 @@ public void DecrementEnemyCount()
         DoorController doorController = door.GetComponent<DoorController>();
         if (doorController != null)
         {
-            StartCoroutine(SlideDoor(door, -doorController.openDirection, doorController.openDistance, 0.1f));
+            StartCoroutine(SlideDoor(door, -doorController.openDirection, doorController.openDistance, 0.5f));
+            if (doorSound != null)
+            {
+                doorSound.Play();
+            }
         }
         else
         {
@@ -126,7 +135,7 @@ public void DecrementEnemyCount()
             case 1: return doors1;
             case 2: return doors2;
             case 3: return doors3;
-            case 4: return doors4;
+            // case 4: return doors4;
             default: return null;
         }
     }

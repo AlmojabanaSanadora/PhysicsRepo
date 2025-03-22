@@ -24,6 +24,12 @@ public class PlayerHealth : MonoBehaviour
             Invoke(nameof(ThanosPlayer), 0.1f);
         }
     }
+    public void Heal(float amount)
+{
+    currentHealth += amount;
+    currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); 
+    Debug.Log($"Player healed by {amount}. Current health: {currentHealth}");
+}
     private void UpdateHealthBar()
     {
         healthBar.value = currentHealth / maxHealth;

@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyController : MonoBehaviour
+public class EnemyHandler : MonoBehaviour
 {
     private NavMeshAgent agent;
     private Transform player;
     private Animator animator;
     public LayerMask WhatIsGround, WhatIsPlayer;
     public GameObject bullet;
+    public AudioSource attackSound;
 
     public Vector3 walkArea;
     bool walkPointState;
@@ -107,6 +108,11 @@ public class EnemyController : MonoBehaviour
 
         if (!cooldownOn)
         {
+            if (attackSound != null)
+            {
+                attackSound.Play();
+            }
+
             Rigidbody rb = Instantiate(bullet, transform.position + transform.forward, transform.rotation).GetComponent<Rigidbody>();
             rb.linearVelocity = transform.forward * 32f;
             rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
