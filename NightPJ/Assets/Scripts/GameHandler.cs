@@ -44,12 +44,9 @@ public class GameHandler : MonoBehaviour
     {
         if (roomNumber == currentRoom) return;
 
-
         CloseDoorsForRoom(currentRoom);
 
         currentRoom = roomNumber;
-
-        OpenDoorsForRoom(currentRoom);
 
         EnemySpawner.instance.SetActiveRoom(currentRoom);
         calcEnemyCount = EnemySpawner.instance.totalEnemiesToSpawn;
