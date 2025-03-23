@@ -660,7 +660,6 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   gameOverCanvas: {fileID: 0}
   maxHealth: 100
-  minHealth: 0
   currentHealth: 0
 --- !u!82 &3926330766245048746
 AudioSource:
