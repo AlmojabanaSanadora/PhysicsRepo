@@ -10,11 +10,13 @@ public class PlayerHealth : MonoBehaviour
     public float minHealth = 0f;
     public float currentHealth;
 
+    public GameObject mainCamera; // 🔴 Referencia a la cámara del jugador
+
     private void Start()
     {
         currentHealth = maxHealth;
         UpdateHealthBar();
-        
+
         // Asegurar que el GameOverCanvas esté desactivado al inicio
         if (gameOverCanvas != null)
         {
@@ -48,13 +50,19 @@ public class PlayerHealth : MonoBehaviour
 
     private void ShowGameOver()
     {
-        // 🔴 Activa el Canvas de Game Over
+        // 🔴 Desvincular la cámara del jugador para que no se destruya
+        if (mainCamera != null)
+        {
+            mainCamera.transform.SetParent(null);
+        }
+
+        // 🔴 Activar el Canvas de Game Over
         if (gameOverCanvas != null)
         {
             gameOverCanvas.SetActive(true);
         }
 
-        // 🔴 Opcional: Desactivar al jugador para evitar que siga moviéndose
+        // 🔴 Desactivar el jugador en vez de destruirlo
         gameObject.SetActive(false);
     }
 }
