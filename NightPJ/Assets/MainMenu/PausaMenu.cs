@@ -8,34 +8,43 @@ public class PausaMenu : MonoBehaviour
     public GameObject ObjetoMenuPausa;
     public bool Pausa = false;
     public GameObject MenuSalir;
+    public GameObject gameOverUI; // Asigna el menú de Game Over en el Inspector
 
-     void Update()
+    void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Pausa == false) 
+            // Si el menú de Game Over está activo, no permitir pausar
+            if (gameOverUI.activeSelf)
+                return;
+
+            if (!Pausa)
             {
-                ObjetoMenuPausa.SetActive(true);
-                Pausa = true;
-
-                Time.timeScale = 0;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-
-                AudioSource[] sonidos = FindObjectsOfType<AudioSource>();
-        
-                for (int i = 9; i < sonidos.Length; i++)
-                {
-                    sonidos[i].Pause();
-                }
+                ActivarPausa();
             }
-            else if(Pausa == true)
+            else
             {
                 Resumir();
             }
         }
     }
 
+    void ActivarPausa()
+    {
+        ObjetoMenuPausa.SetActive(true);
+        Pausa = true;
+
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        AudioSource[] sonidos = FindObjectsOfType<AudioSource>();
+
+        for (int i = 0; i < sonidos.Length; i++)
+        {
+            sonidos[i].Pause();
+        }
+    }
 
     public void Resumir()
     {
@@ -49,15 +58,15 @@ public class PausaMenu : MonoBehaviour
 
         AudioSource[] sonidos = FindObjectsOfType<AudioSource>();
 
-        for (int i = 9; i < sonidos.Length; i++)
+        for (int i = 0; i < sonidos.Length; i++)
         {
             sonidos[i].Play();
         }
     }
 
-    public void IrAlMenu(string NombreMneu)
+    public void IrAlMenu(string NombreMenu)
     {
-        SceneManager.LoadScene(NombreMneu);
+        SceneManager.LoadScene(NombreMenu);
     }
 
     public void SalirDelJuego()
@@ -65,3 +74,4 @@ public class PausaMenu : MonoBehaviour
         Application.Quit();
     }
 }
+
