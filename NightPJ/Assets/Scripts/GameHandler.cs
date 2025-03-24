@@ -18,7 +18,7 @@ public class GameHandler : MonoBehaviour
 
     private bool[] doorsOpen = new bool[4];
     private int currentRoom = 1;
-    private int lastRoom = 4;
+    private int lastRoom = 5;
 
 
     private void Awake()
