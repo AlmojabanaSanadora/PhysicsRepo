@@ -1031,8 +1031,8 @@ MonoBehaviour:
   attackSound: {fileID: 6402595144585402613}
   walkArea: {x: 0, y: 0, z: 0}
   WalkPointRadius: 15
-  attackCooldown: 1.5
-  sightRadius: 5
+  attackCooldown: 2
+  sightRadius: 8
   attackRadius: 1.5
 --- !u!114 &4573156629699495860
 MonoBehaviour:
