@@ -11,7 +11,7 @@ public class Shot : MonoBehaviour
     public float shotRate = 0.5f; 
     public float rayRange = 100f; 
     public LayerMask hitLayers;
-    public float damage = 101f;
+    public int damage = 101;
 
     private float shotRateTime = 0;
 

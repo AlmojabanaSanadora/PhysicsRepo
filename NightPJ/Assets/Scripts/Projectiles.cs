@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float damage;
+    public int damage;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -10,7 +10,7 @@ public class Projectile : MonoBehaviour
         {
             Debug.Log($"Hit enemy: {other.name}");
             EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
-            if (enemyHealth != null)
+            if (enemyHealth != null && damage > 0)
             {
                 enemyHealth.TakeDamage(damage);
             }
@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
         {
             Debug.Log($"Hit player: {other.name}");
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            if (playerHealth != null && damage > 0)
             {
                 playerHealth.TakeDamage(damage); 
             }

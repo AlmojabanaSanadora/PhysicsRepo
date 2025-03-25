@@ -18,7 +18,7 @@ public class GameHandler : MonoBehaviour
 
     private bool[] doorsOpen = new bool[4];
     private int currentRoom = 1;
-    private int lastRoom = 5;
+    private int lastRoom = 4;
 
 
     private void Awake()
@@ -67,6 +67,7 @@ public void DecrementEnemyCount()
             {
                 if (currentRoom == lastRoom)
                 {
+                    Debug.Log("Calling Game Over!");
                     ShowGameOver();
                 }
                 else            
@@ -152,9 +153,15 @@ public void DecrementEnemyCount()
 
         private void ShowGameOver()
     {
+        Debug.Log("Game Over!");
         if (gameOverUI != null)
         {
             gameOverUI.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Debug.LogWarning("Game Over UI is not set!");
         }
 
         gameObject.SetActive(false);

@@ -6,8 +6,8 @@ public class PlayerHealth : MonoBehaviour
 {
     public static PlayerHealth instance;
     public Slider healthBar;
-    public float maxHealth = 100f;
-    public float currentHealth;
+    public int maxHealth = 100;
+    public int currentHealth;
 
     private void Start()
     {
@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealthBar();
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
@@ -27,7 +27,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void Heal(float amount)
+    public void Heal(int amount)
     {
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);

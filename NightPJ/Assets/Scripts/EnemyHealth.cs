@@ -6,14 +6,14 @@ public class EnemyHealth : MonoBehaviour
     public float health = 100f;
     private Animator animator;
     private bool isDead = false; 
-    private float healing = 10f;
+    private int healing = 10;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         if (isDead) return; 
 
